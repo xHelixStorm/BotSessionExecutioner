@@ -37,7 +37,7 @@ public class Session {
 				status = "UNKNOWN";
 			
 			//display the status on the screen
-			System.out.print("["+session.getSessionName()+"] STATUS ["+status+"]");
+			System.out.println("["+session.getSessionName()+"] STATUS ["+status+"]");
 		}
 	}
 }

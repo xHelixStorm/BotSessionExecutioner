@@ -2,12 +2,24 @@ package core;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Set;
 
 import org.ini4j.Ini;
 
+/**
+ * Class to interact with the ini file
+ * @author xHelixStorm
+ *
+ */
+
 public class IniReader {
+	
+	/**
+	 * Open the ini file
+	 * @return
+	 */
+	
 	private static Ini readConfig() {
 		try {
 			return new Ini(new File("config.ini"));
@@ -17,15 +29,31 @@ public class IniReader {
 		}
 	}
 	
+	/**
+	 * Check if the ini file is empty
+	 * @return
+	 */
+	
 	public static boolean isIniEmpty() {
 		Ini ini = readConfig();
 		return ini.isEmpty();
 	}
 	
+	/**
+	 * Retrieve all saved sections (sessions)
+	 * @return
+	 */
+	
 	public static Set<String> getAllSessions() {
 		Ini ini = readConfig();
 		return ini.keySet();
 	}
+	
+	/**
+	 * Retrieve all options of the current session
+	 * @param session
+	 * @return
+	 */
 	
 	public static Object[] getWholeSession(String session) {
 		Ini ini = readConfig();
@@ -42,44 +70,27 @@ public class IniReader {
 		return options;
 	}
 	
-	public static String getJarName() {
+	/**
+	 * Create a new section in the ini file
+	 * @param options
+	 */
+	
+	public static void createSection(HashMap<String, String> options) {
 		Ini ini = readConfig();
-		return ini.get("Executioner", "JarName");
-	}
-	public static boolean getTakeNames() {
-		Ini ini = readConfig();
-		return ini.get("Executioner", "TakeNames", boolean.class);
-	}
-	public static boolean getTakeParams() {
-		Ini ini = readConfig();
-		return ini.get("Executioner", "TakeParams", boolean.class);
-	}
-	public static boolean getTakePaths() {
-		Ini ini = readConfig();
-		return ini.get("Executioner", "TakePaths", boolean.class);
-	}
-	public static boolean getPassNames() {
-		Ini ini = readConfig();
-		return ini.get("Executioner", "PassNames", boolean.class);
-	}
-	public static List<String> getTokens() {
-		Ini ini = readConfig();
-		Ini.Section section = ini.get("Tokens");
-		return section.getAll("Token");
-	}
-	public static List<String> getNames() {
-		Ini ini = readConfig();
-		Ini.Section section = ini.get("Names");
-		return section.getAll("Name");
-	}
-	public static List<String> getParams() {
-		Ini ini = readConfig();
-		Ini.Section section = ini.get("Params");
-		return section.getAll("Param");
-	}
-	public static List<String> getPaths() {
-		Ini ini = readConfig();
-		Ini.Section section = ini.get("Paths");
-		return section.getAll("Path");
+		String sectionName = options.get("sessionName");
+		ini.add(sectionName, "sessionName", sectionName);
+		ini.add(sectionName, "jarName", options.get("jarName"));
+		ini.add(sectionName, "path", options.get("path"));
+		ini.add(sectionName, "useParameters", options.get("useParameters"));
+		ini.add(sectionName, "parameters", options.get("parameters"));
+		ini.add(sectionName, "useTempDirectory", options.get("useTempDirectory"));
+		ini.add(sectionName, "tempDirectory", options.get("tempDirectory"));
+		ini.add(sectionName, "tempFileName", options.get("tempFileName"));
+		
+		try {
+			ini.store();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

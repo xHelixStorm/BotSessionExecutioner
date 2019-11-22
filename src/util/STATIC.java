@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class STATIC {
 	private static final String VERSION = "2.0.4";
-	private static ArrayList<Session> sessions;
+	private static ArrayList<Session> sessions = new ArrayList<Session>();
 	
 	/**
 	 * Retrieve current version number
@@ -28,6 +28,15 @@ public class STATIC {
 	
 	public static void setSessions(ArrayList<Session> _sessions) {
 		sessions = _sessions;
+	}
+	
+	/**
+	 * Add a new session to save
+	 * @param _session
+	 */
+	
+	public static void addSession(Session _session) {
+		sessions.add(_session);
 	}
 	
 	/**

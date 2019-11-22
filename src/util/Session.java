@@ -33,6 +33,7 @@ public class Session {
 		this.path = _path;
 		this.sessionName = _sessionName;
 		this.useParameters = _useParameters;
+		this.parameters = _parameters;
 		this.useTempDirectory = _useTempDirectory;
 		this.tempDirectory = _tempDirectory;
 		this.tempFileName = _tempFileName;

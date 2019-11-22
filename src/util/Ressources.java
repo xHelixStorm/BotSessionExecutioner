@@ -2,6 +2,7 @@ package util;
 
 import java.util.ArrayList;
 
+import commands.Create;
 import core.IniReader;
 
 public class Ressources {
@@ -9,6 +10,8 @@ public class Ressources {
 		//verify if the ini is empty
 		if(IniReader.isIniEmpty()) {
 			//create the very first session if it's empty
+			System.out.println("First application start detected! Running session creation wizard now!");
+			Create.runCreate();
 		}
 		else {
 			//collect all previously saved sessions
