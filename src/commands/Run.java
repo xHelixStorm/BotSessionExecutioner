@@ -23,7 +23,7 @@ public class Run {
 				//iterate through all registered sessions
 				for(var session : STATIC.getSessions()) {
 					//be sure that the operating system is linux, else interrupt the start up
-					if(SystemUtils.IS_OS_LINUX) {
+					//if(SystemUtils.IS_OS_LINUX) {
 						try {
 							//start a screen process in the background of the system
 							Process proc = Runtime.getRuntime().exec("screen -dm -S "+session.getSessionName()+" java -jar --enable-preview "+session.getJarName()+" "+(session.useParameters() && session.getParameters() != null ? " "+replaceVariables(session.getParameters(), session) : ""), null, new File("bot/"));
@@ -32,11 +32,11 @@ public class Run {
 						} catch (IOException | InterruptedException e) {
 							e.printStackTrace();
 						}
-					}
+					/*}
 					else {
 						System.out.println("Operating system is not supported! Command interrupted!");
 						return;
-					}
+					}*/
 				}
 			}
 			//start up the session mentioned in the parameter
@@ -76,13 +76,13 @@ public class Run {
 	 */
 	
 	private static String replaceVariables(String parameter, final Session session) {
-		parameter = parameter.replaceAll("$jarName", session.getJarName());
-		parameter = parameter.replaceAll("$path", session.getPath());
-		parameter = parameter.replaceAll("$sessionName", session.getSessionName());
-		parameter = parameter.replaceAll("$useParameters", ""+session.useParameters());
-		parameter = parameter.replaceAll("$useTempDirectory", ""+session.useTempDirectory());
-		parameter = parameter.replaceAll("$tempDirectory", session.getTempDirectory());
-		parameter = parameter.replaceAll("$tempFileName", session.getTempFileName());
+		parameter = parameter.replaceAll("\\$jarName", session.getJarName());
+		parameter = parameter.replaceAll("\\$path", session.getPath());
+		parameter = parameter.replaceAll("\\$sessionName", session.getSessionName());
+		parameter = parameter.replaceAll("\\$useParameters", ""+session.useParameters());
+		parameter = parameter.replaceAll("\\$useTempDirectory", ""+session.useTempDirectory());
+		parameter = parameter.replaceAll("\\$tempDirectory", session.getTempDirectory());
+		parameter = parameter.replaceAll("\\$tempFileName", session.getTempFileName());
 		return parameter;
 	}
 }

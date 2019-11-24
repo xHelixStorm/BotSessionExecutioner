@@ -64,7 +64,7 @@ public class Create {
 		System.out.println("Do you wish to execute this application with self defined parameters? (Y/N)");
 		do {
 			System.out.print(">");
-			var useParameters = scan.next();
+			var useParameters = scan.nextLine();
 			if(useParameters.equals("exit"))
 				return;
 			else if(useParameters.equalsIgnoreCase("y"))
@@ -95,7 +95,7 @@ public class Create {
 		System.out.println("Does your application use a temporary directory to check, if the application is already running? (Y/N)");
 		do {
 			System.out.print(">");
-			var useTempDirectory = scan.next();
+			var useTempDirectory = scan.nextLine();
 			if(useTempDirectory.equals("exit"))
 				return;
 			else if(useTempDirectory.equalsIgnoreCase("y"))
