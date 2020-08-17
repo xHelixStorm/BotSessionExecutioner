@@ -15,6 +15,8 @@ public class Session {
 	boolean useTempDirectory;
 	String tempDirectory;
 	String tempFileName;
+	boolean rest;
+	String restUrl;
 	
 	/**
 	 * 
@@ -26,9 +28,11 @@ public class Session {
 	 * @param _useTempDirectory true/false if a temporary directory should be used
 	 * @param _tempDirectory Path to the temporary directory
 	 * @param _tempFileName name of the temporary file name for the session status
+	 * @param _rest if rest requests are allowed
+	 * @param _restUrl url of the rest integration
 	 */
 
-	public Session(String _jarName, String _path, String _sessionName, boolean _useParameters, String _parameters, boolean _useTempDirectory, String _tempDirectory, String _tempFileName) {
+	public Session(String _jarName, String _path, String _sessionName, boolean _useParameters, String _parameters, boolean _useTempDirectory, String _tempDirectory, String _tempFileName, boolean _rest, String _restUrl) {
 		this.jarName = _jarName;
 		this.path = _path;
 		this.sessionName = _sessionName;
@@ -37,6 +41,8 @@ public class Session {
 		this.useTempDirectory = _useTempDirectory;
 		this.tempDirectory = _tempDirectory;
 		this.tempFileName = _tempFileName;
+		this.rest = _rest;
+		this.restUrl = _restUrl;
 	}
 	
 	/**
@@ -108,5 +114,23 @@ public class Session {
 	
 	public String getTempFileName() {
 		return this.tempFileName;
+	}
+	
+	/**
+	 * Check if it's allowed to send rest requests
+	 * @return
+	 */
+	
+	public boolean getRest() {
+		return this.rest;
+	}
+	
+	/**
+	 * Retrieve the rest URL
+	 * @return
+	 */
+	
+	public String getRestURL() {
+		return this.restUrl;
 	}
 }

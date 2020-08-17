@@ -58,7 +58,7 @@ public class IniReader {
 	public static Object[] getWholeSession(String session) {
 		Ini ini = readConfig();
 		Ini.Section section = ini.get(session);
-		Object [] options = new Object[8];
+		Object [] options = new Object[10];
 		options[0] = section.get("jarName");
 		options[1] = section.get("path");
 		options[2] = section.get("sessionName");
@@ -67,6 +67,8 @@ public class IniReader {
 		options[5] = section.get("useTempDirectory", boolean.class);
 		options[6] = section.get("tempDirectory");
 		options[7] = section.get("tempFileName");
+		options[8] = section.get("rest", boolean.class);
+		options[9] = section.get("restUrl");
 		return options;
 	}
 	

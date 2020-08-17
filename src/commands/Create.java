@@ -24,7 +24,7 @@ public class Create {
 		HashMap<String, String> options = new HashMap<String, String>();
 		
 		//session name
-		System.out.println("Please give your new session a name");
+		System.out.println("Please give your new session a name!");
 		do {
 			System.out.print(">");
 			var sessionName = scan.next();
@@ -36,7 +36,7 @@ public class Create {
 		} while(options.get("sessionName") == null);
 		
 		//jar file name
-		System.out.println("Please insert the name of the callable jar file");
+		System.out.println("Please insert the name of the callable jar file!");
 		do {
 			System.out.print(">");
 			var jarName = scan.nextLine();
@@ -49,7 +49,7 @@ public class Create {
 		} while(options.get("jarName") == null);
 		
 		//application path
-		System.out.println("Please insert the path to the directory where the jar file resides");
+		System.out.println("Please insert the path to the directory where the jar file resides!");
 		do {
 			System.out.print(">");
 			var path = scan.nextLine();
@@ -78,7 +78,7 @@ public class Create {
 		
 		//parameters
 		if(options.get("useParameters").equals("true")) {
-			System.out.println("Please define your parameters. Each parameter should be separated by a blank space");
+			System.out.println("Please define your parameters. Each parameter should be separated by a blank space!");
 			do {
 				System.out.print(">");
 				var parameters = scan.nextLine();
@@ -108,7 +108,7 @@ public class Create {
 		
 		if(options.get("useTempDirectory").equals("true")) {
 			//temp directory
-			System.out.println("Please write down the path to the application's temporary directory");
+			System.out.println("Please write down the path to the application's temporary directory!");
 			do {
 				System.out.print(">");
 				var tempDirectory = scan.nextLine();
@@ -119,7 +119,7 @@ public class Create {
 			} while(options.get("tempDirectory") == null);
 			
 			//temp file name
-			System.out.println("Please write the name of the temporary file which resides inside the temporary directory");
+			System.out.println("Please write the name of the temporary file which resides inside the temporary directory!");
 			do {
 				System.out.print(">");
 				var tempFileName = scan.nextLine();
@@ -135,6 +135,37 @@ public class Create {
 			options.put("tempDirectory", "");
 			options.put("tempFileName", "");
 		}
+		//REST service
+		System.out.println("Do you allow REST service executions? (Y/N)");
+		do {
+			System.out.print(">");
+			var rest = scan.nextLine();
+			if(rest.equals("exit"))
+				return;
+			else if(rest.equalsIgnoreCase("y"))
+				options.put("rest", "true");
+			else if(rest.equalsIgnoreCase("n"))
+				options.put("rest", "false");
+			else
+				System.out.println("Please write either Y or N!");
+		} while(options.get("rest") == null);
+		
+		//REST URL
+		if(options.get("rest").equals("true")) {
+			System.out.println("Please define the rest url!");
+			do {
+				System.out.print(">");
+				var url = scan.nextLine();
+				if(url.equals("exit"))
+					return;
+				else if(url.matches("^((http:\\/\\/|https:\\/\\/)[a-zA-Z0-9-_\\.]*[0-9a-zA-Z]{2,4}|http://localhost|[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3})(:[0-9]{2,5}|)$"))
+					options.put("restUrl", url);
+				else
+					System.out.println("Please use a valid url!");
+			} while(options.get("restUrl") == null);
+		}
+		else
+			options.put("restUrl", "");
 		
 		//Save the new session into cache
 		STATIC.addSession(new Session(
@@ -145,7 +176,9 @@ public class Create {
 			options.get("parameters"),
 			Boolean.parseBoolean(options.get("useTempDirectory")),
 			options.get("tempDirectory"),
-			options.get("tempFileName")
+			options.get("tempFileName"),
+			Boolean.parseBoolean(options.get("rest")),
+			options.get("restUrl")
 		));
 		
 		//create a new section in the ini file

@@ -16,10 +16,10 @@ public class Ressources {
 		else {
 			//collect all previously saved sessions
 			ArrayList<Session> sessions = new ArrayList<Session>();
-			IniReader.getAllSessions().parallelStream().forEach(session -> {
+			IniReader.getAllSessions().stream().forEach(session -> {
 				//Retrieve all options of the found session and add it to array
 				Object [] options = IniReader.getWholeSession(session);
-				sessions.add(new Session((String)options[0], (String)options[1], (String)options[2], (boolean)options[3], (String)options[4], (boolean)options[5], (String)options[6], (String)options[7]));
+				sessions.add(new Session((String)options[0], (String)options[1], (String)options[2], (boolean)options[3], (String)options[4], (boolean)options[5], (String)options[6], (String)options[7], (boolean)options[8], (String)options[9]));
 			});
 			//save retrieved sessions
 			if(sessions.size() > 0) {

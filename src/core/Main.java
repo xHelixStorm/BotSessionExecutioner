@@ -41,8 +41,8 @@ public class Main {
 					Session.runSession();
 				else if(param.startsWith("run"))
 					Run.runRun(param.replaceFirst("run", "").trim());
-				else if(param.startsWith("terminate"))
-					Terminate.runTerminate(param.replaceFirst("terminate", "").trim());
+				else if(param.startsWith("terminate")) 
+					Terminate.runTerminate(param.replaceFirst("terminate", "").trim().split(" "));
 				else
 					System.out.println("Invalid command!");
 			} while(true);
