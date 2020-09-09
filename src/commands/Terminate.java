@@ -62,6 +62,11 @@ public class Terminate {
 							else {
 								System.out.println(session.getSessionName()+" couldn't be terminated! Rest error!");
 							}
+							try {
+								Thread.sleep(300);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
 						}
 						else {
 							System.out.println(session.getSessionName()+" couldn't be terminated. Token required as param!");
@@ -103,6 +108,11 @@ public class Terminate {
 							}
 							else {
 								System.out.println(session.getSessionName()+" couldn't be terminated! Rest error!");
+							}
+							try {
+								Thread.sleep(300);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
 							}
 						}
 						else {

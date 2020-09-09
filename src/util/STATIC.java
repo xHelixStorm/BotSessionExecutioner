@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 
 public class STATIC {
-	private static final String VERSION = "2.0.5";
+	private static final String VERSION = "2.0.6";
 	private static ArrayList<Session> sessions = new ArrayList<Session>();
 	
 	/**
