@@ -91,6 +91,36 @@ public class Create {
 		else
 			options.put("parameters", "");
 		
+		//Allow the use of vm parameters
+		System.out.println("Do you wish to pass vm parameters? (Y/N)");
+		do {
+			System.out.println(">");
+			var vmParameters = scan.nextLine();
+			if(vmParameters.equals("exit"))
+				return;
+			else if(vmParameters.equalsIgnoreCase("y"))
+				options.put("useVmParameters", "true");
+			else if(vmParameters.equalsIgnoreCase("n"))
+				options.put("useVmParameters", "false");
+			else
+				System.out.println("Please write either Y or N! ");
+		} while(options.get("useVmParameters") == null);
+		
+		//VM parameters
+		if(options.get("useVmParameters").equals("true")) {
+			System.out.println("Please define your vm parameters. Each parameter should be separated by a blank space!");
+			do {
+				System.out.print(">");
+				var parameters = scan.nextLine();
+				if(parameters.equals("exit"))
+					return;
+				else
+					options.put("vmParameters", parameters);
+			} while(options.get("vmParameters") == null);
+		}
+		else
+			options.put("vmParameters", "");
+		
 		//allow the use of a temp directory
 		System.out.println("Does your application use a temporary directory to check, if the application is already running? (Y/N)");
 		do {
@@ -174,6 +204,8 @@ public class Create {
 			options.get("sessionName"),
 			Boolean.parseBoolean(options.get("useParameters")),
 			options.get("parameters"),
+			Boolean.parseBoolean(options.get("useVmParameters")),
+			options.get("vmParameters"),
 			Boolean.parseBoolean(options.get("useTempDirectory")),
 			options.get("tempDirectory"),
 			options.get("tempFileName"),

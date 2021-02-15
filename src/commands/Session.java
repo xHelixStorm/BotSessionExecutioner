@@ -1,8 +1,13 @@
 package commands;
 
-import java.io.File;
+import java.io.BufferedReader;
+//import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-import util.Files;
+import org.apache.commons.lang3.SystemUtils;
+
+//import util.Files;
 import util.STATIC;
 
 /**
@@ -13,31 +18,37 @@ import util.STATIC;
 
 public class Session {
 	public static void runSession() {
-		//iterate through all saved sessions from the ini file
-		for(final var session : STATIC.getSessions()) {
-			var status = "";
-			//confirm that a temporary directory exists and should be used. Else display that the status is unknown
-			if(session.useTempDirectory() && new File(session.getTempDirectory()).exists()) {
-				var fileName = session.getTempDirectory()+session.getTempFileName();
-				//confirm that the file exists
-				if(new File(fileName).exists()) {
-					//read the file content and set the status
-					var content = Files.readFile(fileName);
-					if(content.equals("0"))
-						status = "NOT RUNNING";
-					else if(content.equals("1"))
-						status = "RUNNING";
-					else
-						status = "UNKNOWN";
+		if(SystemUtils.IS_OS_LINUX) {
+			//display all running sessions and save to string
+			StringBuilder response = new StringBuilder();
+			try {
+				Process proc = Runtime.getRuntime().exec("ls -laR /var/run/screen/");
+				proc.waitFor();
+				BufferedReader out = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+				String line = null;
+				while((line = out.readLine()) != null) {
+					response.append(line);
 				}
-				else
-					status = "NOT RUNNING";
+			} catch (IOException | InterruptedException e) {
+				e.printStackTrace();
 			}
-			else
-				status = "UNKNOWN";
 			
-			//display the status on the screen
-			System.out.println("["+session.getSessionName()+"] STATUS ["+status+"]");
+			//iterate through all saved sessions from the ini file
+			for(final var session : STATIC.getSessions()) {
+				var status = "";
+				if(response.toString().contains(session.getSessionName())) {
+					status = "RUNNING";
+				}
+				else {
+					status = "NOT RUNNING";
+				}
+				
+				//display the status on the screen
+				System.out.println("["+session.getSessionName()+"] STATUS ["+status+"]");
+			}
+		}
+		else {
+			System.out.println("Operating system is not supported! Command interrupted!");
 		}
 	}
 }

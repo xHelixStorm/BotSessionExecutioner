@@ -12,6 +12,8 @@ public class Session {
 	String sessionName;
 	boolean useParameters;
 	String parameters;
+	boolean useVmParameters;
+	String vmParameters;
 	boolean useTempDirectory;
 	String tempDirectory;
 	String tempFileName;
@@ -25,6 +27,8 @@ public class Session {
 	 * @param _sessionName Name of the session
 	 * @param _useParameters true/false if parameters should be passed
 	 * @param _parameters contains all parameters for this session
+	 * @param _useVmParameters true/false if vm parameters should be passed
+	 * @param _vmParameters contains all vm parameters for this session
 	 * @param _useTempDirectory true/false if a temporary directory should be used
 	 * @param _tempDirectory Path to the temporary directory
 	 * @param _tempFileName name of the temporary file name for the session status
@@ -32,12 +36,14 @@ public class Session {
 	 * @param _restUrl url of the rest integration
 	 */
 
-	public Session(String _jarName, String _path, String _sessionName, boolean _useParameters, String _parameters, boolean _useTempDirectory, String _tempDirectory, String _tempFileName, boolean _rest, String _restUrl) {
+	public Session(String _jarName, String _path, String _sessionName, boolean _useParameters, String _parameters ,boolean _useVmParameters, String _vmParameters, boolean _useTempDirectory, String _tempDirectory, String _tempFileName, boolean _rest, String _restUrl) {
 		this.jarName = _jarName;
 		this.path = _path;
 		this.sessionName = _sessionName;
 		this.useParameters = _useParameters;
 		this.parameters = _parameters;
+		this.useVmParameters = _useVmParameters;
+		this.vmParameters = _vmParameters;
 		this.useTempDirectory = _useTempDirectory;
 		this.tempDirectory = _tempDirectory;
 		this.tempFileName = _tempFileName;
@@ -88,6 +94,24 @@ public class Session {
 	
 	public String getParameters() {
 		return this.parameters;
+	}
+	
+	/**
+	 * Retrieve a boolean value for either allowing or prohibit the use of vm parameters
+	 * @return
+	 */
+	
+	public boolean useVmParameters() {
+		return this.useVmParameters;
+	}
+	
+	/**
+	 * Retrieve all vm parameters with which the jar file has to be launched
+	 * @return
+	 */
+	
+	public String getVmParameters() {
+		return this.vmParameters;
 	}
 	
 	/**

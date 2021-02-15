@@ -26,7 +26,7 @@ public class Run {
 					//if(SystemUtils.IS_OS_LINUX) {
 						try {
 							//start a screen process in the background of the system
-							Process proc = Runtime.getRuntime().exec("screen -dm -S "+session.getSessionName()+" java -jar --enable-preview "+session.getJarName()+" "+(session.useParameters() && session.getParameters() != null ? " "+replaceVariables(session.getParameters(), session) : ""), null, new File("bot/"));
+							Process proc = Runtime.getRuntime().exec("screen -dm -S "+session.getSessionName()+" java "+(session.useVmParameters() && session.getVmParameters() != null ? session.getVmParameters()+" " : "")+"-jar --enable-preview "+session.getJarName()+" "+(session.useParameters() && session.getParameters() != null ? " "+replaceVariables(session.getParameters(), session) : ""), null, new File("bot/"));
 							proc.waitFor();
 							System.out.println(session.getSessionName()+" launched!");
 						} catch (IOException | InterruptedException e) {
@@ -48,7 +48,7 @@ public class Run {
 					if(SystemUtils.IS_OS_LINUX) {
 						try {
 							//start a screen process in the background of the system
-							Process proc = Runtime.getRuntime().exec("screen -dm -S "+session.getSessionName()+" java -jar --enable-preview "+session.getJarName()+" "+(session.useParameters() && session.getParameters() != null ? " "+replaceVariables(session.getParameters(), session) : ""), null, new File("bot/"));
+							Process proc = Runtime.getRuntime().exec("screen -dm -S "+session.getSessionName()+" java "+(session.useVmParameters() && session.getVmParameters() != null ? session.getVmParameters()+" " : "")+"-jar --enable-preview "+session.getJarName()+" "+(session.useParameters() && session.getParameters() != null ? " "+replaceVariables(session.getParameters(), session) : ""), null, new File("bot/"));
 							proc.waitFor();
 							System.out.println(session.getSessionName()+" launched!");
 						} catch (IOException | InterruptedException e) {

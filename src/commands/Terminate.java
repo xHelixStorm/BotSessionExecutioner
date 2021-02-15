@@ -62,11 +62,6 @@ public class Terminate {
 							else {
 								System.out.println(session.getSessionName()+" couldn't be terminated! Rest error!");
 							}
-							try {
-								Thread.sleep(300);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
 						}
 						else {
 							System.out.println(session.getSessionName()+" couldn't be terminated. Token required as param!");
@@ -109,11 +104,6 @@ public class Terminate {
 							else {
 								System.out.println(session.getSessionName()+" couldn't be terminated! Rest error!");
 							}
-							try {
-								Thread.sleep(300);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
 						}
 						else {
 							System.out.println(session.getSessionName()+" couldn't be terminated. Token required as param!");
@@ -130,30 +120,29 @@ public class Terminate {
 	}
 	
 	private static boolean restTermination(String token, String link, String message) {
-		try {
-			URL url = new URL(link);
-			HttpURLConnection con = (HttpURLConnection)url.openConnection();
-			con.setRequestMethod("POST");
-			con.setRequestProperty("Content-Type", "application/json");
-			con.setRequestProperty("Accept", "application/json");
-			con.setDoOutput(true);
-			String json = "{\"token\": \""+token+"\", \"type\": \"shutdown\""+(message.length() > 0 ? "\"message\": \""+message+"\"" : "")+"}";
-			try(OutputStream os = con.getOutputStream()) {
-			    byte[] input = json.getBytes("utf-8");
-			    os.write(input, 0, input.length);			
+		for(int i = 0; i < 10; i++) {
+			try {
+				URL url = new URL(link);
+				HttpURLConnection con = (HttpURLConnection)url.openConnection();
+				con.setRequestMethod("POST");
+				con.setRequestProperty("Content-Type", "application/json");
+				con.setRequestProperty("Accept", "application/json");
+				con.setDoOutput(true);
+				String json = "{\"token\": \""+token+"\", \"type\": \"shutdown\""+(message.length() > 0 ? "\"message\": \""+message+"\"" : "")+"}";
+				try(OutputStream os = con.getOutputStream()) {
+				    byte[] input = json.getBytes("utf-8");
+				    os.write(input, 0, input.length);			
+				}
+				con.connect();
+				int response = con.getResponseCode();
+				if(response >= 200 && response <= 399) {
+					return true;
+				}
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-			con.connect();
-			int response = con.getResponseCode();
-			if(response >= 200 && response <= 399) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		return false;
 	}
